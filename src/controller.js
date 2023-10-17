@@ -28,7 +28,18 @@ class LibroController {
         [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.ISBN]);
         res.json({"Registros actualizados": result.changedRows});
     }
-
-}
+    async getOne(req,res) {
+            try {
+                const libro = req.body;
+                const [result] = await pool.query('SELECT * FROM libros WHERE id=?', [libro.id]);
+                if (result[0] != undefined) {
+                    res.json(result);
+                } else {
+                    res.json({"Error": "No se encontro libro con el ID indicado."});
+                }
+            } catch(e) {
+                console.log(e);
+            }
+    }
 
 export const libro = new LibroController()
