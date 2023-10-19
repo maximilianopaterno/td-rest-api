@@ -10,11 +10,28 @@ class LibroController {
     }
 
     async add(req, res) {
+      try {
         const libro = req.body;
         const [result] = await pool.query(`INSERT INTO Libros (nombre, autor, categoria, añopublicacion, ISBN) VALUES (?, ?, ?, ?, ?)`,
-        [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.ISBN]);
+        [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.ISBN]);   
+        if (libro.nombre === undefined || libro.nombre === "") {
+            throw new Error('Faltan campo Nombre en la solicitud');
+          } else if ((libro.autor === undefined || libro.autor === "")) {
+            throw new Error('Faltan campo Autor en la solicitud');
+          } else if ((libro.categoria === undefined || libro.categoria === "")) {
+            throw new Error('Faltan campo Categoria en la solicitud');
+          } else if ((libro.añopublicacion === undefined || libro.añopublicacion === "")) {
+            throw new Error('Faltan campo Año Publicacion en la solicitud');  
+          } else if ((libro.ISBN === undefined || libro.ISBN === "")) {
+            throw new Error('Faltan campo ISBN en la solicitud');
+          } else if (libro.ISBN === "0" || libro.ISBN === 0) {
+            throw new Error('Debe proporcionar un ISBN');  
+          }
         res.json({"ID insertado": result.insertId });
-    }
+      } catch (error) {
+        res.status(400).send(error.message);
+      }
+    };
 
     async delete(req, res) {
         const libro = req.body;
