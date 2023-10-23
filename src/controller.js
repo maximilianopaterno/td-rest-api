@@ -8,7 +8,7 @@ class LibroController {
         const [result] = await pool.query('SELECT * FROM libros');
         res.json(result);
     }
-
+/*
     async add(req, res) {
       try {
         const libro = req.body;
@@ -51,6 +51,8 @@ class LibroController {
         [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.ISBN]);
         res.json({"Registros actualizados": result.changedRows});
     }
+
+    */
     async getOne(req,res) {
             try {
                 const libro = req.body;
