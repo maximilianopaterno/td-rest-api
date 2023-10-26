@@ -73,7 +73,7 @@ class LibroController {
             res.json({"Registros eliminados": result.affectedRows});
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: error.message });
+            res.status(400).json({ error: error.message });
         }
     }
     
@@ -92,7 +92,7 @@ class LibroController {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: error.message });
+            res.status(400).json({ error: error.message });
         }
     }
 
@@ -115,7 +115,7 @@ class LibroController {
                 res.json({"Registros actualizados": result.changedRows});
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: error.message });
+            res.status(400).json({ error: error.message });
         }
     }
 
@@ -138,7 +138,7 @@ class LibroController {
                 res.json({"Registros actualizados": result.changedRows});
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: error.message });
+            res.status(400).json({ error: error.message });
         }
     }
 
