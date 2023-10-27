@@ -52,6 +52,11 @@ class LibroController {
           if (camposInvalidos.length > 1) {
             return res.status(400).send(`Se cargaron campos inválidos: ${camposInvalidos.join(' , ')}.`); //Devuelve los nombre de los campos invalidos.
             };
+// Verificar que no se repita ISBN
+          const [existeLibro] = await pool.query('SELECT * FROM Libros WHERE ISBN = ?', [libro.ISBN]);
+          if (existeLibro.length > 0) {
+            return res.status(400).json({ error: `El ISBN '${libro.ISBN}' ya existe en la base de datos.` });
+          }
           
           const [result] = await pool.query(`INSERT INTO Libros (nombre, autor, categoria, añopublicacion, ISBN) VALUES (?, ?, ?, ?, ?)`,
             [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.ISBN]
