@@ -4,9 +4,13 @@ import { pool } from "./database.js";
 
 class LibroController {
 
-    async getAll(req, res) {
-        const [result] = await pool.query('SELECT * FROM Libros');
-        res.json(result);
+   async getAll(req, res) {
+        try {
+            const [result] = await pool.query('SELECT * FROM Libros');
+            res.json(result);
+        } catch (error) {
+            res.status(500).json({"Error": "Ocurrio un error al obtener los libros."});
+        }
     }
 
 // Insertar un nuevo libro.    
